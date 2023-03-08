@@ -1,7 +1,7 @@
 # Claims
 
 We will quickly list the claims supported and claims not (fully) supported.
-Then, we will describe step-by-step instructions to verify the supported claims and describe how the not (fully) supported claims can be stop tested.
+Then, we will describe step-by-step instructions to verify the supported claims and describe how the not (fully) supported claims can be spot tested.
 
 ## Claims fully supported by the artifact
 
@@ -19,7 +19,7 @@ Then, we will describe step-by-step instructions to verify the supported claims 
 
 ## General Setup
 
-1. Build the full image with `docker build . -t cryptopt` from the root directory (the one containing the `Dockerfile`)
+1. Build the full image with `docker build . -t cryptopt` from the root directory (the one containing the `Dockerfile`) ()
     - *NOTE:* This takes a bit longer (around two hours on my machine), because we also re-build everything proof-related from source.
     - The build was successful if it ends with `Sucessfully tagged cryptopt.quick:latest` (or `naming to docker.io/library/cryptopt`, depending on your docker version).
 
