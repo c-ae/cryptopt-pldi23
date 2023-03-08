@@ -46,7 +46,7 @@ SL | Spill location changed spill-to-memory <-> spill-to-xmm
 
 While Optimizing, CryptOpt will generate files in the `./results/<BRIDGE>/<SYMBOL>` folder (adjustable with `--resultDir` parameter to `./CryptOpt`).
 
-CryptOpt writes out intermediate ASM-files whenever *it finishes a bet* and an additional file when finished the *run*.
+CryptOpt writes out intermediate ASM-files whenever *it finishes a bet* (`seed*_ratio*.asm` ) and an additional file when finished the *run* (`seed000*_ratio*.asm`). The file from the *run* has the original seed value (default to UTC time stamp) padded with a couple `0`s. Hence, this one should always start with `000` for next couple thousand years or so. The intermediate results are hashes of the initial seed, less likely to start with `00016`.
 CryptOpt also generates the internal state (in `*.json` files) of the optimization for each *bet*-outcome.
 The directory also contains a `*.dat` (space separated) file with rows for every bet/run containing the `l/g` value every time it is printed to the terminal.
 From that `*.dat` file, the generated `*.gp` file will generate the `*.pdf` file, which shows the optimization in progress.
