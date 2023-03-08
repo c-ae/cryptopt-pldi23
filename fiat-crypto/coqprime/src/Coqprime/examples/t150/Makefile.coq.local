@@ -1,3 +1,0 @@
-
-res :
-	make clean; make -s all > res
