@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# die on error
+set -e
+
+# If you place this script into your $PATH, change this variable to
+# where CryptOpt has been unpacked to
+INSTALLDIR="$(dirname "${0}")"
+
+# go into the Install directory. Everything is relative from there
+cd "${INSTALLDIR}"
+
+#run
+PATH="$(realpath ./bins/node/bin):${PATH}" \
+  /usr/bin/env node \
+  "./dist/CryptOpt.js" "${@}"

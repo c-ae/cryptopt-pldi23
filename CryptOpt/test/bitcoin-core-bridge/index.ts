@@ -1,0 +1,13 @@
+import { describe, expect, it } from "vitest";
+
+import { BitcoinCoreBridge } from "@/bridge/bitcoin-core-bridge";
+
+describe("bridge", () => {
+  describe("bridge:getCryptOptFunction", () => {
+    it("should only have every node once", () => {
+      const b = new BitcoinCoreBridge().getCryptOptFunction("scmul").body;
+      const set = new Set(b.map((n) => n.name[0]));
+      expect(b).toHaveLength(set.size);
+    });
+  });
+});

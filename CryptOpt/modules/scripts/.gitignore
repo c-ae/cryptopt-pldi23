@@ -1,0 +1,4 @@
+ansible/inventory/*
+node_modules
+.vimspector.json
+

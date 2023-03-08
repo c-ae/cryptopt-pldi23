@@ -1,0 +1,7 @@
+CryptOpt/node_modules
+CryptOpt/dist
+CryptOpt/bins
+CryptOpt/results*
+.cache
+.vscode
+bundle.*
