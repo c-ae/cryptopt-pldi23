@@ -1,0 +1,30 @@
+name: CI (Coq, docker, dev)
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  build-dev:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: all
+      uses: coq-community/docker-coq-action@v1
+      with:
+        coq_version: dev
+        ocaml_version: default
+        custom_script: |
+          sudo chmod -R a+rw .
+          echo '::group::install general dependencies'
+          sudo apt-get update -y
+          sudo apt-get install -y python python3
+          eval $(opam env)
+          echo '::endgroup::'
+          echo '::remove-matcher owner=coq-problem-matcher::'
+          etc/ci/github-actions-make.sh --warnings -j2 all
+          etc/ci/github-actions-make.sh --warnings -j2 perf-Sanity

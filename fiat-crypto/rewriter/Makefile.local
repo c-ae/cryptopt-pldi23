@@ -1,0 +1,7 @@
+PROFILE?=
+OTHERFLAGS += -w -notation-overridden,-unusable-identifier
+ifneq ($(PROFILE),)
+OTHERFLAGS += -profile-ltac
+endif
+
+include src/Rewriter/Rewriter/Examples/PerfTesting/Makefile.coq.local
