@@ -1,3 +1,4 @@
+# vim: set syntax=Dockerfile:
 FROM ubuntu:jammy
 # jammy is Ubuntu 22.10 LTS
 
@@ -8,28 +9,29 @@ ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # general deps, fiat deps, cryptopt deps
-RUN apt install -y git make vim tar zsh calc\
+RUN apt install -y git make vim emacs nano tar zsh calc \
         coq jq libcoq-ocaml-dev make ocaml-findlib \
         autoconf clang curl g++ gcc gnuplot-nox libtool nasm pkg-config poppler-utils tmux
-RUN printf "set -o vi\nalias ll=ls -l" >> ~/.bashrc
 
-# get and install assemblyline
-COPY assemblyline-1.3.2 /root
+RUN printf "set -o vi\nalias ll='ls -l'\n" >> ~/.zshrc
+
+# copy and install assemblyline
+COPY assemblyline-1.3.2 /root/assemblyline-1.3.2
 RUN cd /root/assemblyline-1.3.2 && ./configure && \
         make CFLAGS=-O3 all install && \
         ldconfig
 
 # get and install fiat-crypto
-COPY fiat-crypto /root
+COPY fiat-crypto /root/fiat-crypto
 RUN make standalone-ocaml -j2 -C /root/fiat-crypto
 
 # copy and initialize SUPERCOP
-COPY supercop /root
+COPY supercop /root/supercop
 RUN cd /root/supercop && \
         ./bench.sh init
 
 # copy and install CryptOpt
-COPY CryptOpt /root
+COPY CryptOpt /root/CryptOpt
 RUN make all -C /root/CryptOpt && \
         make install-zsh -C /root/CryptOpt
 

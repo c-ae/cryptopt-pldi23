@@ -15,6 +15,8 @@ done
 
 common=("--evals=200k" "--bets=20" "--betRatio=0.1")
 
+# If you have multiple cores, and don't care about the screen outputs, then feel free to run in parallel by putting an & at the end and a 'wait' before the printf
+#
 #for curve25519/openssl-fe51-cryptopt
 ./CryptOpt "${common[@]}" --curve curve25519 --method=mul
 ./CryptOpt "${common[@]}" --curve curve25519 --method=square
@@ -30,4 +32,4 @@ common=("--evals=200k" "--bets=20" "--betRatio=0.1")
 ./CryptOpt "${common[@]}" --bridge bitcoin-core --curve secp256k1 --method=mul
 ./CryptOpt "${common[@]}" --bridge bitcoin-core --curve secp256k1 --method=square
 
-printf "\n\033[32mDone.\033[0m You can see the pdfs in ./results/{bitcoin-core,fiat}/*/*.pdf and execute the copy-script\n./V_2_copy_results_to_supercop.sh\n"
+printf "\n\033[32mDone.\033[0m You can see the pdfs in ./results/{bitcoin-core,fiat}/*/*.pdf. You can now run the copy script. Execute ./V_2_copy_results_to_supercop.sh\n"
