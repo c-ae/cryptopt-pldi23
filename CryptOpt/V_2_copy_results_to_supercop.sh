@@ -50,4 +50,4 @@ convert_all \
   bitcoin-core \
   secp256k1_fe_mul_inner secp256k1_fe_sqr_inner
 
-printf "\n\033[32mDone.\033[0m. You can run the SUPERCOP benchmark now.\n./V_3_run_supercop_benchmark.sh\n"
+printf "\n\033[32mDone.\033[0m. You can run the SUPERCOP benchmark now.\nExecute ./V_3_run_supercop_benchmark.sh\n"

@@ -180,40 +180,45 @@ We will then convert those results to SUPERCOP-compatible assembly files and run
     If you have much more time at hand, you can execute this script multiple times (even in parallel: open a second terminal on the host, run `docker exec -ti CryptOpt zsh` and you have a second prompt into the container) to get more (potentially better) results.
     In the paper we claim that we run three in parallel (Section 5.1.Generation).
     - This should have created new directories and files in the `./results/fiat/` as well as in `./result/bitcoin-core`
-    (this is successful if it prints 'Done. You can see the `pdf`s in ./results/{bitcoin-core,fiat}/*/*.pdf and execute the copy-script')
+    (this is successful if it prints "Done. You can see the `pdf`s in ./results/{bitcoin-core,fiat}/\*/\*.pdf. You can now run the copy script. Execute ./V\_2\_copy\_results\_to\_supercop.sh")
 1. Execute the `./V_2_copy_results_to_supercop.sh` script to transform the results into SUPERCOP directory and format.
-    (this is successful if it prints 'Done. You can run the SUPERCOP benchmark now.')
-1. Run the benchmark `./V_3_run_supercop_benchmark.sh`
-    *Note*: will take a while (depending on your machine ~20min).
-    (this is successful if it prints 'Done. See above benchmark (or bench-results.txt)")
-1. this should print to the terminal (and to ./bench-results.txt) an output similar to this: (this one is from the i7 12G)
+    (this is successful if it prints "Done. You can run the SUPERCOP benchmark now. Execute ./V\_3\_run\_supercop\_benchmark.sh")
+1. Run the benchmark `./V_3_run_supercop_benchmark.sh`.
+    *Note*: will take a while (2 min).
+    (this is successful if it prints "Done. See above benchmark (or bench-results.txt)")
+1. This should print to the terminal (and to ./bench-results.txt for this matter) an output similar to this: (this one is from the i9 13G)
     ```
-                        HACL* fe-64               366k cycles
-              OSSL fe-64 + CryptOpt               395k cycles
-              OSSL fe-51 + CryptOpt               406k cycles
-                     OSSL fe-64 ots               411k cycles
-                           OSSL ots               421k cycles
-                           amd64-51               422k cycles
-                     OSSL fe-51 ots               424k cycles
-                          donna-c64               452k cycles
-                           amd64-64               453k cycles
-                            sandy2x               479k cycles
-                              donna               876k cycles
+Benchmarking: >>crypto_scalarmult/curve25519<<
+                        HACL* fe-64               210k cycles
+              OSSL fe-64 + CryptOpt               217k cycles
+              OSSL fe-51 + CryptOpt               227k cycles
+                     OSSL fe-64 ots               231k cycles
+                           OSSL ots               238k cycles
+                     OSSL fe-51 ots               238k cycles
+                           amd64-51               251k cycles
+                            sandy2x               262k cycles
+                           amd64-64               266k cycles
+                          donna-c64               285k cycles
+                              donna               495k cycles
 
+Benchmarking: >>crypto_scalarmult/secp256k1<<
+      libsecp256k1 + CryptOpt (CS2)               235k cycles
+            libsecp256k1 + CryptOpt               243k cycles
+                   libsecp256k1 (C)               246k cycles
+                 libsecp256k1 (ASM)               253k cycles
     ```
     This list lists the fastest version for each implementation.
-    The first column specifies the implementation as found in the paper's Table 6 and the second column the elapsed cycles.
+    The first column specifies the implementation as found in the paper's Table 7 and the second column the elapsed cycles.
 
-1. **Important Note**: We found that those numbers can deviate significantly when executed in the Docker container compared to bare metal.
+1. *Note*: If those numbers deviate significantly, it may be because it was run in the Docker container and not bare metal.
     If this happens, you can try validating bare metal. (Needs Clang 14 and GCC 11.3.0 installed to be representative.)
-    To validate bare metal, after executing inside the container `./V_3_run_supercop_benchmark.sh`, copy the `/root/supercop` to the host, change the `hostname` and run the benchmark: 
+    To validate bare metal, after executing `./V_3_run_supercop_benchmark.sh` inside the container, copy the `/root/supercop` to the host, change the `hostname` in `/root/supercop/bench/<<hostname>>/data` and run the benchmark: 
     ```bash
     docker cp CryptOpt:/root/supercop .
     cd supercop
     mv bench/* bench/`hostname | sed 's/\..*//' | tr -cd '[a-z][A-Z][0-9]' | tr '[A-Z]' '[a-z]'`
     ./bench.sh
     ```
-    (may take 4 min)
     If even the '+CryptOpt' cycles are still not comparable, you may need to run the optimization on bare metal as well.
     For this, you'd need to
     - install `AssemblyLine` (follow the install instructions in `./assemblyline-1.3.2/README.md`#How to Use) on the host system,
@@ -225,17 +230,19 @@ We will then convert those results to SUPERCOP-compatible assembly files and run
 
 ### Evaluation
 
-This list is sorted by `elapsed cycles`, note the `...k cycles` of the implementation with the fastest compiler settings.
-Find the column in Table 6, that is closest to your architecture.
+This list is sorted by `elapsed cycles`, note the `...k cycles`.
+Find the column in Table 7, that is closest to your architecture.
 Then compare the ...k cycle values.
 
 If you happen to have a very similar architecture, the numbers should be very similar, too. (May consider turning off boosting and HyperThread'ing as well as fixing the frequency).
-- Now find the implementations with the '+CryptOpt' suffixes.
+If the absolute numbers deviate significantly (as in our case above, because we did not fix the frequency), the relative order and ratios should still match.
+To check this, 
+- Find the implementations with the '+CryptOpt' suffixes.
 - Compare with the default ones. (i.e. `OSSL fe-64 ots` vs. `OSSL fe-64 + CryptOpt`)
-- Calculate the ratio in the paper: e.g. for Intel i7 12G `412/394` = 1.045, CryptOpt is around 4.5% faster)
-- Calculate the ratio in the experiment: `411/395` = 1.040, CryptOpt is around 4% faster)
+- Calculate the ratio in the paper: e.g. for Intel i7 12G (the closest one to our Intel i9 13G) `412/394 = 1.045` (CryptOpt is around 4.5% faster)
+- Calculate the ratio in the experiment: `231/218 = 1.059` (CryptOpt is around 5.9% faster)
  
-It those are similar enough, considering architectural differences, noise and the variability of performance claims, the claims can be approved.
+It those are similar enough, considering architectural differences, noise and variability of performance claims in general, the claims can be approved.
 Otherwise, try to optimize again (after a reboot maybe) or on a different machine, which matches the one from our experiment closer.
 
 ## Optimization is platform specific (Claim VI)
