@@ -1,6 +1,6 @@
 # CryptOpt Artifact Evaluation - Getting Started (max. 25min)
 
-1. Have a Linux machine with Docker installed. Help for installing docker [here, Install Docker](https://docs.docker.com/get-docker) or [here, Install Docker Engine  Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
+1. Have a Linux machine with Docker installed. Help for installing docker [here, Install Docker](https://docs.docker.com/get-docker), our convenience script in [./INSTALL_docker.md](./INSTALL_docker.md) or [here, Install Docker Engine Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
     - *Note*: See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) if you are using `snap.io` to install Docker and have permission errors while copying result files. (5 min)
 
 1. Get this archive (192MB as zip) and consider the directory containing this `README.md` as the root directory.
