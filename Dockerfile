@@ -9,9 +9,11 @@ ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # general deps, fiat deps, cryptopt deps
-RUN apt install -y git make vim emacs nano tar zsh calc\
+RUN apt install -y git make vim emacs nano tar zsh calc \
         coq jq libcoq-ocaml-dev make ocaml-findlib \
         autoconf clang curl g++ gcc gnuplot-nox libtool nasm pkg-config poppler-utils tmux
+
+RUN printf "set -o vi\nalias ll='ls -l'\n" >> ~/.zshrc
 
 # copy and install assemblyline
 COPY assemblyline-1.3.2 /root/assemblyline-1.3.2

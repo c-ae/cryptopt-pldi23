@@ -51,7 +51,7 @@ The paper claims to be able to generate code for multiply and square primitives 
 ### Action
 
 `./CryptOpt --curve XXX --method YYY` will call Fiat Cryptography internally, generate assembly, write them into `./results/fiat/<<PRIMITIVE>>` and prove them correct.
-Either choose the combination curve/method you like to generate or use the script `./I_1_generate_all.sh` to generate all. (1.5 hrs)
+Either choose the combination curve/method you like to generate or use the script `./I_1_generate_all.sh` to generate all. (1.5 hours)
 This may take a bit and does not need user interaction (), but you'll see the status output on the screen.
 This is successful if it generated 108 assembly files (18 primitives with each 5 bets plus 1 final run) and ends with 
 
@@ -121,7 +121,7 @@ There is no `X` Server installed in the container, so we will copy the results f
 
 1. There are many graphs already created, but if you want to be as close as possible to the one in Figure 9 in the [Paper appendix](./pldi2023-paper326-supplemental_text.pdf):
     - Execute on an Intel i7 10th Generation, in the container, `CC=clang ./CryptOpt --curve p434      --method square --evals 200k --bets=20 --betRatio=0.1` (for Fig 9.a)  and 
-    - Execute on an Intel i7 11th Generation, in the container, `CC=clang ./CryptOpt --curve secp256k1 --method square --evals 200k --bets=20 --betRatio=0.1` (for Fig 9.b) (the former TIME, the latter 20 min).
+    - Execute on an Intel i7 11th Generation, in the container, `CC=clang ./CryptOpt --curve secp256k1 --method square --evals 200k --bets=20 --betRatio=0.1` (for Fig 9.b) (the former 4.5 hours, the latter 20 min).
 1. On your host system, copy the results folder via `docker cp CryptOpt:/root/CryptOpt/results/ /tmp/`.
 1. Take a pdf viewer of your choice and view the `pdf`s in `/tmp/results/fiat/fiat_poly1305_carry_mul/*.pdf` (or respective other function names in the folder)
 
@@ -175,7 +175,7 @@ We will then convert those results to SUPERCOP-compatible assembly files and run
 ### Action
 
 1. Execute the `./V_1_generate_for_supercop.sh` script.
-    - *Note*: this will take a while, please try to keep the noise on this machine at a minimum for best results. (TIME)
+    - *Note*: this will take a while, please try to keep the noise on this machine at a minimum for best results. (60 min)
     - *Note*: if this take too long for you, you can change the `--evals` parameter inside the script to something smaller.
     If you have much more time at hand, you can execute this script multiple times (even in parallel: open a second terminal on the host, run `docker exec -ti CryptOpt zsh` and you have a second prompt into the container) to get more (potentially better) results.
     In the paper we claim that we run three in parallel (Section 5.1.Generation).
