@@ -1,4 +1,7 @@
 #!/usr/bin/env sed
+
+#NOTE: this only works for Clang 13 (not sure about the version, Clang 14 and 15 breaks)
+
 # %N -> xN
 s/%\([[:digit:]]\+\)/x\1/g
 
