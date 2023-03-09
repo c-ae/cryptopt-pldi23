@@ -13,6 +13,7 @@ FS=' ' read -ra curves <<<"curve25519 secp256k1 poly1305 p256 p384 p224 p434 p44
 for curve in "${curves[@]}"; do
   for method in square mul; do
 
+    # If you have multiple cores, and don't care about the screen outputs, then feel free to run in parallel by putting  an & at the end and a 'wait' before the count=
     ./CryptOpt --evals=10k --bets=5 --curve "${curve}" --method "${method}"
   done
 done

@@ -104,8 +104,8 @@ In a nut shell, this is tedious `sed` scripting and `llvm` parsing (the output o
 
 ### Evaluate
 
-1. After the optimization is completed, find the optimized code in the results folder by executing `ls ./results/bitcoin-core/secp256k1_fe_{sqr,mul}_inner/seed*.asm`.
-    If there is `seed<>_ratio<>.asm` files for each primitive, this claim can be considered validated (We evaluate performance during Claim V).
+1. After the optimization is completed, find the optimized code in the results folder by executing `ls ./results/bitcoin-core/secp256k1_fe_{sqr,mul}_inner/seed000*.asm`.
+    If there is one `seed000<>_ratio<>.asm` file for each primitive, this claim can be considered validated (We evaluate performance during Claim V).
 
 
 ## Generating primitives improves over time (Claim III)
