@@ -20,7 +20,7 @@ Then, we will describe step-by-step instructions to verify the supported claims 
 ## General Setup
 
 1. Build the full image with `docker build . -t cryptopt` from the root directory (the one containing the `Dockerfile`) ()
-    - *Note*: This takes a bit longer (55min), because we also re-build everything proof-related from source.
+    - *Note*: This takes a bit longer (55 min), because we also re-build everything proof-related from source.
     - The build was successful if it ends with  `naming to docker.io/library/cryptopt` (or `Sucessfully tagged cryptopt.quick:latest` depending on your docker version).
 
 1. Once docker succeeds, create and run a container from this new image with `docker run -ti --name CryptOpt cryptopt zsh` just like in the 'Getting Started' phase.
@@ -147,12 +147,14 @@ You can change the compiler (and even Compiler Flags) via the `CC` (`CFLAGS`) en
     You can do this with `mv results results.gcc`.
 1. Check, if in the preface of the optimization it says `>> clang -march=native -mtune=native -O3<<` like here:
 
+    ````
     Start on brg/symbolname>>fiat/fiat_curve25519_carry_square<< >>with proofing correct<<
     on cpu >>12th Gen Intel(R) Core(TM) i9-12900KF<< writing results to>>/root/CryptOpt/results<<
     with seed >>3536902944381312<< for >>  200<< evaluations against CC>>clang -march=native
     -mtune=native -O3<< with cycle goal>>10000<< for each measurement on host>>b172961758ab<<
     with pid>>1309<< starting @>>2023-03-08T04:01:25.598Z<<
-    
+    ````
+
 ### Evaluation
 
 1. Note the `l/g` value at the end of the optimization, or check the generated `pdf`s of a certain curve / method combination.
@@ -188,24 +190,24 @@ We will then convert those results to SUPERCOP-compatible assembly files and run
     (this is successful if it prints "Done. See above benchmark (or bench-results.txt)")
 1. This should print to the terminal (and to ./bench-results.txt for this matter) an output similar to this: (this one is from the i9 13G)
     ```
-Benchmarking: >>crypto_scalarmult/curve25519<<
-                        HACL* fe-64               210k cycles
-              OSSL fe-64 + CryptOpt               217k cycles
-              OSSL fe-51 + CryptOpt               227k cycles
-                     OSSL fe-64 ots               231k cycles
-                           OSSL ots               238k cycles
-                     OSSL fe-51 ots               238k cycles
-                           amd64-51               251k cycles
-                            sandy2x               262k cycles
-                           amd64-64               266k cycles
-                          donna-c64               285k cycles
-                              donna               495k cycles
-
-Benchmarking: >>crypto_scalarmult/secp256k1<<
-      libsecp256k1 + CryptOpt (CS2)               235k cycles
-            libsecp256k1 + CryptOpt               243k cycles
-                   libsecp256k1 (C)               246k cycles
-                 libsecp256k1 (ASM)               253k cycles
+    Benchmarking: >>crypto_scalarmult/curve25519<<
+                            HACL* fe-64               210k cycles
+                  OSSL fe-64 + CryptOpt               217k cycles
+                  OSSL fe-51 + CryptOpt               227k cycles
+                         OSSL fe-64 ots               231k cycles
+                               OSSL ots               238k cycles
+                         OSSL fe-51 ots               238k cycles
+                               amd64-51               251k cycles
+                                sandy2x               262k cycles
+                               amd64-64               266k cycles
+                              donna-c64               285k cycles
+                                  donna               495k cycles
+    
+    Benchmarking: >>crypto_scalarmult/secp256k1<<
+          libsecp256k1 + CryptOpt (CS2)               235k cycles
+                libsecp256k1 + CryptOpt               243k cycles
+                       libsecp256k1 (C)               246k cycles
+                     libsecp256k1 (ASM)               253k cycles
     ```
     This list lists the fastest version for each implementation.
     The first column specifies the implementation as found in the paper's Table 7 and the second column the elapsed cycles.

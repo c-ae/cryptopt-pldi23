@@ -1,15 +1,14 @@
-# CryptOpt Artifact Evaluation - Getting Started (max. 25min)
+# CryptOpt Artifact Evaluation - Getting Started (max. 20min)
 
-1. Have a Linux machine with Docker installed. Help for installing docker [here, Install Docker](https://docs.docker.com/get-docker), our convenience script in [./INSTALL_docker.md](./INSTALL_docker.md) or [here, Install Docker Engine Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
-    - *Note*: See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) if you are using `snap.io` to install Docker and have permission errors while copying result files. (5 min)
+1. You should have Docker installed already.
 
 1. Get this archive (192MB as zip) and consider the directory containing this `README.md` as the root directory.
 
 1. Build the 'quick start' image with `docker build . -t cryptopt.quick -f Dockerfile.quick`. (`.` is the *build context*. It's the path containing the `Dockerfile{,.quick}`s)
-    - *Note:* This step needs an Internet connection and may take some time to download and build the layers.
+    - *Note*: This step needs an Internet connection and may take some time to download and build the layers.
 
 1. Wait for the image to be built. (17 min)
-    - *Note:* Depending on your docker version, you may see a lot of output, some may be red. Those are hopefully just warnings on stderr inside the build, which emits red while building the container. If it still does something, it is probably okay.
+    - *Note*: If you have an older docker version, you may see a lot of output, some may be red. Those are hopefully just warnings on stderr inside the build, which emits red while building the container. If it still does something, it is probably okay.
     - The build was successful if it ends with `naming to docker.io/library/cryptopt.quick` (or `Sucessfully tagged cryptopt.quick:latest` depending on your docker version).
     - The build command will create an image tagged `cryptopt.quick`, where all the dependencies are installed and the projects are built, ready to go.
 

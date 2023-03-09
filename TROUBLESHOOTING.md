@@ -5,6 +5,11 @@ The installation steps for Docker depend on your OS.
 *Note*: If your host OS is Linux and Docker is installed via `Snap.io` there is [known issue with docker cp](https://github.com/docker/for-linux/issues/564).
 Either install via default docker guidelines, or copy to `/tmp` and find copied files in `/tmp/snap.docker/tmp`)
 
+### Docker build errors 404
+
+On some builds in some regions for bizarre phenomenon the `apt install` command errors with a 404 Not Found. (on `systemd`).
+The issue seems to be resolved when removing the non essential programs `emacs` and `nano` from the install command in the `Dockerfile{,.quick}`
+
 ### I've installed docker but get permission denied errors
 
 Symptoms:
@@ -45,3 +50,8 @@ docker: Error response from daemon: Conflict. The container name "/CryptOpt" is 
 If you disconnect (CTRL+C) from the interactive session, the container dies.
 It can be restarted with `docker start CryptOpt` and can be attached to with `docker attach CryptOpt`.
 Then you should be back with `abcdef1234#`
+
+
+### I want another shell into the container
+
+In order to open another shell into the contianer, you can run `docker exec -ti CryptOpt zsh`
